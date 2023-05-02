@@ -13,33 +13,23 @@ class VisualTransformationManager private constructor(
         class Custom() {
             private var digitFormat : List<Int> = listOf(4)
             private var separator : String = " - "
-            private var maxLength : Int = Int.MAX_VALUE
 
             fun setDigitFormat(format : List<Int>) = apply { digitFormat = format }
 
             fun setSeparator(separator : String) = apply { this.separator = separator }
 
-            fun setMaxLength(length : Int) = apply { maxLength = length }
-
             fun build() = VisualTransformationManager(
                 visualTransformation = TransformationCustom(
                     digitFormat = digitFormat,
-                    separator = separator,
-                    maxLength = maxLength
+                    separator = separator
                 )
             ).visualTransformation
         }
 
         class Number() {
 
-            private var maxLength : Int = Int.MAX_VALUE
-
-            fun setMaxLength(length : Int) = apply { maxLength = length }
-
             fun build() = VisualTransformationManager(
-                visualTransformation = TransformationNumber(
-                    maxLength = maxLength
-                )
+                visualTransformation = TransformationNumber()
             ).visualTransformation
         }
     }

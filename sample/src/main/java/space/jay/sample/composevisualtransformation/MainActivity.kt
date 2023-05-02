@@ -53,7 +53,6 @@ fun PhoneNumber() {
         visualTransformation = VisualTransformationManager.Builder
             .Custom()
             .setDigitFormat(listOf(3, 4, 4))
-            .setMaxLength(11)
             .build()
     )
 }
@@ -85,7 +84,6 @@ fun Card() {
         visualTransformation = VisualTransformationManager.Builder
             .Custom()
             .setDigitFormat(listOf(4))
-            .setMaxLength(16)
             .build()
     )
 }

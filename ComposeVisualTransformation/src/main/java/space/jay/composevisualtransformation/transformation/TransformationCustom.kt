@@ -7,14 +7,13 @@ import androidx.compose.ui.text.input.VisualTransformation
 
 internal class TransformationCustom(
     private var digitFormat : List<Int>,
-    private var separator : String,
-    private var maxLength : Int = Int.MAX_VALUE
+    private var separator : String
 ) : VisualTransformation {
 
     private val listTransformedSize = digitFormat.map { it + separator.length }
 
     override fun filter(text : AnnotatedString) : TransformedText {
-        val originalInputText = text.text.take(maxLength)
+        val originalInputText = text.text
         val builderOutText = StringBuilder()
         var indexStringStart = 0
         loop@ while (true) {

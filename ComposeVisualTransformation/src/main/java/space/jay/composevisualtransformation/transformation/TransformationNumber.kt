@@ -7,10 +7,10 @@ import androidx.compose.ui.text.input.VisualTransformation
 import java.math.BigInteger
 import java.text.NumberFormat
 
-internal class TransformationNumber(private val maxLength : Int) : VisualTransformation {
+internal class TransformationNumber : VisualTransformation {
 
     override fun filter(text : AnnotatedString) : TransformedText {
-        val digit = text.filter { it.isDigit() }.take(maxLength).toString()
+        val digit = text.filter { it.isDigit() }.toString()
         val result = if (digit.isEmpty()) "" else NumberFormat.getNumberInstance().format(BigInteger(digit))
         return TransformedText(
             AnnotatedString(result),
