@@ -5,6 +5,10 @@ import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
 
+@Deprecated(
+    message = "Bug when reversing text",
+    replaceWith = ReplaceWith(expression = "use VisualTransformationManager")
+)
 class ComposeVisualTransformation(
     private val digitFormat : List<Int> = listOf(4),
     private val appendString : String = " - ",
