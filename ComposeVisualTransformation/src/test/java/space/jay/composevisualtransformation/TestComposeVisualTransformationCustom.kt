@@ -4,7 +4,7 @@ import androidx.compose.ui.text.AnnotatedString
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 
-class TestVisualTransformationCustom {
+class TestComposeVisualTransformationCustom {
 
     @Test
     fun format_change_string() {

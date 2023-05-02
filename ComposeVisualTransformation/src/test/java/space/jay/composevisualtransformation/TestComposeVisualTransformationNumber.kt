@@ -5,7 +5,7 @@ import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import java.text.NumberFormat
 
-class TestVisualTransformationNumber {
+class TestComposeVisualTransformationNumber {
 
     private val number = ComposeVisualTransformation.Builder.Number().build()
 
