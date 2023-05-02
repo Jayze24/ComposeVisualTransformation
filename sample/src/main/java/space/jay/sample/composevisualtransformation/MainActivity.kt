@@ -53,6 +53,7 @@ fun PhoneNumber() {
         visualTransformation = ComposeVisualTransformation.Builder
             .Custom()
             .setDigitFormat(listOf(3, 4, 4))
+            .setSeparator("-")
             .build()
     )
 }
