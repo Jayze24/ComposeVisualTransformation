@@ -24,37 +24,30 @@ dependencies {
 }
 ```
 ## Usage
-String format rules. For example, if you enter "lisOf(3)" in digitFormat and "," in appendString, the character with "," appended to every third character is returned. If you put "lisOf(2,1,5)" in digitFormat, " - " in appendString, and put "12345678901" in TextField, the result is "12 - 3 - 45678 - 90 - 1".   
-Setting isReversed to "true" will cause the counter to be applied behind the scenes.    
-When the length of a character becomes larger than the size set in "maxLength", it is no longer displayed in the TextField. However, pressing backspace erases the invisible but typed character, so you need to use it with a length limit in "onValueChange" as shown in the example below.
-```kotlin
-ComposeVisualTransformation(digitFormat(List<Int>), appendString(String), isReversed(Boolean), maxLength(Int))
-```
-#### Example of price TextField
+There are two build types. Custom builds can create any format they want by setting the digitFormat and separator. For numeric builds, a comma is added for every thousand.   
+Custom build example) Create a build after entering " - " in the separator with digitFormat "lisOf(2,1,5)" in the build. Then when I type "12345678901" into the TextField, the result is "12 - 3 - 45678 - 90 - 1".    
+#### Example of number format TextField
 ```kotlin
 TextField(
     ....
     value = value,
     onValueChange = { value = it },
     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-    visualTransformation = ComposeVisualTransformation(
-        digitFormat = listOf(3),
-        appendString = ",",
-        isReversed = true
-    )
+    visualTransformation = ComposeVisualTransformation.Builder.Number().build()
 )
 ```
-#### Example of card TextField
+#### Example of KOREAN phone number format TextField
 ```kotlin
 TextField(
     ....
     value = value,
-    onValueChange = { value = it.take(16) },
+    onValueChange = { value = it.take(11) },
     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-    visualTransformation = ComposeVisualTransformation(
-        digitFormat = listOf(4),
-        appendString = " - "
-    )
+    visualTransformation = ComposeVisualTransformation.Builder
+        .Custom()
+        .setDigitFormat(listOf(3, 4, 4))
+        .setSeparator("-")
+        .build()
 )
 ```
 
