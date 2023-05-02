@@ -3,13 +3,12 @@ package space.jay.composevisualtransformation
 import androidx.compose.ui.text.AnnotatedString
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
-import java.text.NumberFormat
 
 class TestVisualTransformationCustom {
 
     @Test
     fun format_change_string() {
-        val custom = VisualTransformationManager.Builder.Custom().build()
+        val custom = ComposeVisualTransformation.Builder.Custom().build()
 
         listOf(
             "" to "",
@@ -27,7 +26,7 @@ class TestVisualTransformationCustom {
 
     @Test
     fun format_changed_format() {
-        val custom = VisualTransformationManager.Builder
+        val custom = ComposeVisualTransformation.Builder
             .Custom()
             .setDigitFormat(listOf(1,2,3))
             .setSeparator("*")
@@ -53,7 +52,7 @@ class TestVisualTransformationCustom {
 
     @Test
     fun format_change_cursor() {
-        val custom = VisualTransformationManager.Builder.Custom().build()
+        val custom = ComposeVisualTransformation.Builder.Custom().build()
         val formedText = custom.filter(AnnotatedString("123456789012345"))
         assertThat(formedText.text.text).isEqualTo("1234 - 5678 - 9012 - 345")
         listOf(
@@ -73,7 +72,7 @@ class TestVisualTransformationCustom {
 
     @Test
     fun format_changed_format_change_cursor() {
-        val custom = VisualTransformationManager.Builder
+        val custom = ComposeVisualTransformation.Builder
             .Custom()
             .setDigitFormat(listOf(2,5,1))
             .setSeparator(" ")
@@ -98,7 +97,7 @@ class TestVisualTransformationCustom {
 
     @Test
     fun format_cursor_selection_to_original() {
-        val custom = VisualTransformationManager.Builder.Custom().build()
+        val custom = ComposeVisualTransformation.Builder.Custom().build()
         val formedText = custom.filter(AnnotatedString("123456789012345"))
         assertThat(formedText.text.text).isEqualTo("1234 - 5678 - 9012 - 345")
         listOf(
@@ -119,7 +118,7 @@ class TestVisualTransformationCustom {
 
     @Test
     fun format_changed_format_cursor_selection_to_original() {
-        val custom = VisualTransformationManager.Builder
+        val custom = ComposeVisualTransformation.Builder
             .Custom()
             .setDigitFormat(listOf(2,5,1))
             .setSeparator(" ")

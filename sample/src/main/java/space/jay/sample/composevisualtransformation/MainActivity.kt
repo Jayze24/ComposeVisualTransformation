@@ -20,7 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import space.jay.composevisualtransformation.VisualTransformationManager
+import space.jay.composevisualtransformation.ComposeVisualTransformation
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState : Bundle?) {
@@ -50,7 +50,7 @@ fun PhoneNumber() {
         value = value,
         onValueChange = { value = it.take(11) },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-        visualTransformation = VisualTransformationManager.Builder
+        visualTransformation = ComposeVisualTransformation.Builder
             .Custom()
             .setDigitFormat(listOf(3, 4, 4))
             .build()
@@ -66,7 +66,7 @@ fun Price() {
         value = value,
         onValueChange = { value = it },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-        visualTransformation = VisualTransformationManager.Builder
+        visualTransformation = ComposeVisualTransformation.Builder
             .Number()
             .build()
     )
@@ -81,7 +81,7 @@ fun Card() {
         value = value,
         onValueChange = { value = it.take(16) },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-        visualTransformation = VisualTransformationManager.Builder
+        visualTransformation = ComposeVisualTransformation.Builder
             .Custom()
             .setDigitFormat(listOf(4))
             .build()

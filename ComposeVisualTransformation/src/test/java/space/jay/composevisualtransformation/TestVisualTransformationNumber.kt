@@ -7,7 +7,7 @@ import java.text.NumberFormat
 
 class TestVisualTransformationNumber {
 
-    private val number = VisualTransformationManager.Builder.Number().build()
+    private val number = ComposeVisualTransformation.Builder.Number().build()
 
     @Test
     fun format_number_change() {
