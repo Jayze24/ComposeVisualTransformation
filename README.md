@@ -26,20 +26,34 @@ dependencies {
 ## Usage
 There are two build types. Custom builds can create any format they want by setting the digitFormat and separator. For numeric builds, a comma is added for every thousand.   
 Custom build example) Create a build after entering " - " in the separator with digitFormat "lisOf(2,1,5)" in the build. Then when I type "12345678901" into the TextField, the result is "12 - 3 - 45678 - 90 - 1".    
-#### Example of number format TextField
+#### Example of NUMBER format TextField(#,###)
 ```kotlin
+var value by remember { mutableStateOf("") }
 TextField(
     ....
     value = value,
-    onValueChange = { v ->
-        val text = v.filter { c -> c.isDigit() }
-        value = if (text.isEmpty()) "" else BigInteger(text).toString()
-    },
-    visualTransformation = ComposeVisualTransformation.Builder.Number().build()
+    onValueChange = { ComposeOnValueChange.numberFilter(it) { v -> value = v } },
+    visualTransformation = ComposeVisualTransformation.Builder
+        .Number()
+        .build()
 )
 ```
-#### Example of KOREAN phone number format TextField
+#### Example of CARD format TextField(#### - #### - #### - ####)
 ```kotlin
+var value by remember { mutableStateOf("") }
+TextField(
+    ....
+    value = value,
+    onValueChange = { value = it.take(16) },
+    visualTransformation = ComposeVisualTransformation.Builder
+        .Custom()
+        .setDigitFormat(listOf(4))
+        .build()
+)
+```
+#### Example of KOREAN PHONE NUMBER format TextField(###-####-####)
+```kotlin
+var value by remember { mutableStateOf("") }
 TextField(
     ....
     value = value,
