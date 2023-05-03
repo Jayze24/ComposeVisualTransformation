@@ -14,34 +14,39 @@ object ComposeOnValueChange {
     inline fun numberFilter(
         value : TextFieldValue,
         maxLength : Int = Int.MAX_VALUE,
-        isChangingEmptyStringToZero : Boolean = false,
+        isEmptyStringToZero : Boolean = false,
         onValueChange : (TextFieldValue) -> Unit
     ) {
         var selectionCount = 0
         val text = value.text
-            .filter { c ->
+            .filterIndexed { index, c ->
                 if (c.isDigit()) {
                     true
                 } else {
-                    selectionCount++
+                    if (index < value.selection.start) selectionCount++
                     false
                 }
             }
             .take(maxLength)
         onValueChange(
             if (text.isEmpty()) {
-                if (isChangingEmptyStringToZero) {
+                if (isEmptyStringToZero) {
                     TextFieldValue(
                         text = "0",
                         selection = TextRange(1)
                     )
                 } else {
-                    TextFieldValue("")
+                    TextFieldValue(text)
                 }
             } else {
+                val selection = if (text.length > 1 && text.startsWith("0")) {
+                    value.selection.start - selectionCount - 1
+                } else {
+                    value.selection.start - selectionCount
+                }
                 TextFieldValue(
                     text = BigInteger(text).toString(),
-                    selection = TextRange((value.selection.start - selectionCount).coerceAtLeast(0))
+                    selection = TextRange(selection.coerceAtLeast(0))
                 )
             }
         )
