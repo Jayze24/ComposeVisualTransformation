@@ -19,9 +19,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import space.jay.composevisualtransformation.ComposeOnValueChange
 import space.jay.composevisualtransformation.ComposeVisualTransformation
-import java.math.BigInteger
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState : Bundle?) {
@@ -35,6 +36,8 @@ class MainActivity : ComponentActivity() {
                 PhoneNumber()
                 Spacer(modifier = Modifier.height(8.dp))
                 Price()
+                Spacer(modifier = Modifier.height(8.dp))
+                PriceWithChangeEmptyString()
                 Spacer(modifier = Modifier.height(8.dp))
                 Card()
             }
@@ -63,14 +66,25 @@ fun PhoneNumber() {
 fun Price() {
     var value by remember { mutableStateOf("") }
     TextField(
-        label = { Text(text = "AMOUNT DISPLAY FORMAT", color = Color.Gray) },
+        label = { Text(text = "NUMBER FORMAT", color = Color.Gray) },
         placeholder = { Text(text = "ex) x,xxx", color = Color.Gray) },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         value = value,
-        onValueChange = { v ->
-            val text = v.filter { c -> c.isDigit() }
-            value = if (text.isEmpty()) "" else BigInteger(text).toString()
-        },
+        onValueChange = { ComposeOnValueChange.numberFilter(it, 15) { v -> value = v } },
+        visualTransformation = ComposeVisualTransformation.Builder
+            .Number()
+            .build()
+    )
+}
+
+@Composable
+fun PriceWithChangeEmptyString() {
+    var value by remember { mutableStateOf(TextFieldValue("0")) }
+    TextField(
+        label = { Text(text = "NUMBER WITH ZERO FORMAT", color = Color.Gray) },
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+        value = value,
+        onValueChange = { ComposeOnValueChange.numberFilter(it, 15, true) { v -> value = v } },
         visualTransformation = ComposeVisualTransformation.Builder
             .Number()
             .build()
@@ -83,7 +97,7 @@ fun Card() {
     TextField(
         label = { Text(text = "CARD NUMBER FORMAT", color = Color.Gray) },
         placeholder = { Text(text = "ex) xxxx - xxxx - xxxx - xxxx", color = Color.Gray) },
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
         value = value,
         onValueChange = { value = it.take(16) },
         visualTransformation = ComposeVisualTransformation.Builder

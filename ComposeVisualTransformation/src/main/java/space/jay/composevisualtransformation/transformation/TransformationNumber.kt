@@ -10,8 +10,7 @@ import java.text.NumberFormat
 internal class TransformationNumber : VisualTransformation {
 
     override fun filter(text : AnnotatedString) : TransformedText {
-        val digit = text.filter { it.isDigit() }.toString()
-        val result = if (digit.isEmpty()) "" else NumberFormat.getNumberInstance().format(BigInteger(digit))
+        val result = if (text.text.isEmpty()) "" else NumberFormat.getNumberInstance().format(BigInteger(text.text))
         return TransformedText(
             AnnotatedString(result),
             object : OffsetMapping {
