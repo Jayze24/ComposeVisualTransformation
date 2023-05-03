@@ -31,8 +31,10 @@ Custom build example) Create a build after entering " - " in the separator with 
 TextField(
     ....
     value = value,
-    onValueChange = { value = it },
-    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+    onValueChange = { v ->
+        val text = v.filter { c -> c.isDigit() }
+        value = if (text.isEmpty()) "" else BigInteger(text).toString()
+    },
     visualTransformation = ComposeVisualTransformation.Builder.Number().build()
 )
 ```
@@ -42,7 +44,6 @@ TextField(
     ....
     value = value,
     onValueChange = { value = it.take(11) },
-    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
     visualTransformation = ComposeVisualTransformation.Builder
         .Custom()
         .setDigitFormat(listOf(3, 4, 4))
