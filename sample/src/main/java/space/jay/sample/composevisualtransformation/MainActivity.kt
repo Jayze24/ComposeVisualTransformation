@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import space.jay.composevisualtransformation.ComposeVisualTransformation
+import java.math.BigInteger
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState : Bundle?) {
@@ -47,9 +48,9 @@ fun PhoneNumber() {
     TextField(
         label = { Text(text = "KOREAN PHONE NUMBER FORMAT", color = Color.Gray) },
         placeholder = { Text(text = "ex) xxx-xxxx-xxxx", color = Color.Gray) },
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         value = value,
         onValueChange = { value = it.take(11) },
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         visualTransformation = ComposeVisualTransformation.Builder
             .Custom()
             .setDigitFormat(listOf(3, 4, 4))
@@ -64,9 +65,12 @@ fun Price() {
     TextField(
         label = { Text(text = "AMOUNT DISPLAY FORMAT", color = Color.Gray) },
         placeholder = { Text(text = "ex) x,xxx", color = Color.Gray) },
-        value = value,
-        onValueChange = { value = it },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+        value = value,
+        onValueChange = { v ->
+            val text = v.filter { c -> c.isDigit() }
+            value = if (text.isEmpty()) "" else BigInteger(text).toString()
+        },
         visualTransformation = ComposeVisualTransformation.Builder
             .Number()
             .build()
@@ -79,9 +83,9 @@ fun Card() {
     TextField(
         label = { Text(text = "CARD NUMBER FORMAT", color = Color.Gray) },
         placeholder = { Text(text = "ex) xxxx - xxxx - xxxx - xxxx", color = Color.Gray) },
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         value = value,
         onValueChange = { value = it.take(16) },
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         visualTransformation = ComposeVisualTransformation.Builder
             .Custom()
             .setDigitFormat(listOf(4))
